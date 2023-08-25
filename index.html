@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Guess the Number Game</title>
+</head>
+<body>
+    <h1>Welcome to the Guess the Number game!</h1>
+    <script>
+        function main() {
+            alert("Welcome to the Guess the Number game!");
+
+            const secretNumber = Math.floor(Math.random() * 100) + 1;
+            let attempts = 0;
+
+            while (true) {
+                const guess = prompt("Please input your guess:");
+
+                const parsedGuess = parseInt(guess);
+
+                if (isNaN(parsedGuess)) {
+                    alert("Please enter a valid number.");
+                    continue;
+                }
+
+                attempts++;
+
+                if (parsedGuess < secretNumber) {
+                    alert("Too low! Try again.");
+                } else if (parsedGuess > secretNumber) {
+                    alert("Too high! Try again.");
+                } else {
+                    alert(`Congratulations! You guessed the number in ${attempts} attempts.`);
+                    break;
+                }
+            }
+        }
+
+        main();
+    </script>
+</body>
+</html>
