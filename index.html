@@ -23,12 +23,8 @@
             text-align: center;
         }
         #guess-input {
-            width: 80px;
+            width: 120px;
             padding: 5px;
-            font-size: 16px;
-        }
-        #guess-button {
-            padding: 5px 10px;
             font-size: 16px;
         }
     </style>
@@ -38,7 +34,6 @@
     <p id="message">Welcome! Try to guess the secret number between 1 and 100.</p>
     <div id="input-container">
         <input type="number" id="guess-input" placeholder="Your guess">
-        <button id="guess-button">Submit</button>
     </div>
     <script>
         function main() {
@@ -47,9 +42,6 @@
 
             const messageElement = document.getElementById('message');
             const guessInput = document.getElementById('guess-input');
-            const guessButton = document.getElementById('guess-button');
-
-            guessButton.addEventListener('click', makeGuess);
 
             guessInput.addEventListener('keypress', function(event) {
                 if (event.key === 'Enter') {
@@ -72,8 +64,10 @@
                     } else {
                         messageElement.textContent = `Congratulations! You guessed the number in ${attempts} attempts.`;
                         guessInput.disabled = true;
-                        guessButton.disabled = true;
                     }
+
+                    // Clear the input field
+                    guessInput.value = '';
                 }
             }
         }
