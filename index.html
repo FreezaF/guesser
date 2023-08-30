@@ -2,35 +2,78 @@
 <html>
 <head>
     <title>Guess the Number Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        #message {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        #input-container {
+            text-align: center;
+        }
+        #guess-input {
+            width: 80px;
+            padding: 5px;
+            font-size: 16px;
+        }
+        #guess-button {
+            padding: 5px 10px;
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Refresh To Play Again Or Press CTRL + R Or CMD + R</h1>
+    <h1>Guess the Number Game</h1>
+    <p id="message">Welcome! Try to guess the secret number between 1 and 100.</p>
+    <div id="input-container">
+        <input type="number" id="guess-input" placeholder="Your guess">
+        <button id="guess-button">Submit</button>
+    </div>
     <script>
         function main() {
-            alert("Welcome to the Guess the Number game!");
-
             const secretNumber = Math.floor(Math.random() * 100) + 1;
             let attempts = 0;
 
-            while (true) {
-                const guess = prompt("Please input your guess:");
+            const messageElement = document.getElementById('message');
+            const guessInput = document.getElementById('guess-input');
+            const guessButton = document.getElementById('guess-button');
 
-                const parsedGuess = parseInt(guess);
+            guessButton.addEventListener('click', makeGuess);
 
-                if (isNaN(parsedGuess)) {
-                    alert("Please enter a valid number.");
-                    continue;
+            guessInput.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    makeGuess();
                 }
+            });
 
-                attempts++;
+            function makeGuess() {
+                const guess = parseInt(guessInput.value);
 
-                if (parsedGuess < secretNumber) {
-                    alert("Too low! Try again.");
-                } else if (parsedGuess > secretNumber) {
-                    alert("Too high! Try again.");
+                if (isNaN(guess) || guess < 1 || guess > 100) {
+                    messageElement.textContent = "Please enter a valid number between 1 and 100.";
                 } else {
-                    alert(`Congratulations! You guessed the number in ${attempts} attempts.`);
-                    break;
+                    attempts++;
+
+                    if (guess < secretNumber) {
+                        messageElement.textContent = "Too low! Try again.";
+                    } else if (guess > secretNumber) {
+                        messageElement.textContent = "Too high! Try again.";
+                    } else {
+                        messageElement.textContent = `Congratulations! You guessed the number in ${attempts} attempts.`;
+                        guessInput.disabled = true;
+                        guessButton.disabled = true;
+                    }
                 }
             }
         }
